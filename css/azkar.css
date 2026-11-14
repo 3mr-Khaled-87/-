@@ -1,0 +1,395 @@
+/* ========================================================
+   AZKAR PAGE — صفحة الأذكار
+   ======================================================== */
+
+/* Main wrapper */
+.azkar-almuslim {
+    min-height: 60vh;
+    padding: 100px 20px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (max-width: 855px) {
+    .azkar-almuslim {
+        padding-top: 80px;
+        padding-bottom: 90px;
+    }
+}
+
+/* ── Page Title ── */
+.azkar-almuslim>h3 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    font-weight: 700;
+    color: var(--gold-dark);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.azkar-almuslim>h3::after {
+    content: '';
+    display: block;
+    width: 72px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold-primary), transparent);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+body.dark-mode .azkar-almuslim>h3 {
+    color: var(--gold-light);
+}
+
+/* ========================================================
+   CATEGORIES GRID — شبكة التصنيفات
+   ======================================================== */
+.azkar-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 14px;
+    margin-top: 32px;
+}
+
+/* Each card */
+.azkar-links>div {
+    position: relative;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(246, 240, 226, 0.88));
+    border: 1px solid var(--gold-border);
+    border-radius: 18px;
+    padding: 20px 14px 16px;
+    text-align: center;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(197, 164, 78, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    overflow: hidden;
+}
+
+/* Emoji icon via data-icon */
+.azkar-links>div::before {
+    content: attr(data-icon);
+    display: block;
+    font-size: 30px;
+    margin-bottom: 8px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+/* Gold shimmer hover overlay */
+.azkar-links>div::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--gold-primary), #e8d48b);
+    opacity: 0;
+    border-radius: inherit;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.azkar-links>div>* {
+    position: relative;
+    z-index: 1;
+}
+
+.azkar-links>div:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold-primary);
+    box-shadow: 0 12px 28px rgba(197, 164, 78, 0.22);
+    color: #2b1f06;
+}
+
+.azkar-links>div:hover::after {
+    opacity: 0.4;
+}
+
+.azkar-links>div:hover::before {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.azkar-links>div:active {
+    transform: scale(0.96);
+}
+
+/* Dark mode cards */
+body.dark-mode .azkar-links>div {
+    background: linear-gradient(145deg, #1b1f28, #14171e);
+    border-color: rgba(197, 164, 78, 0.18);
+    color: #d4ba6e;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .azkar-links>div:hover {
+    border-color: var(--gold-primary);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    color: #ffffff;
+}
+
+/* Responsive grid */
+@media (max-width: 600px) {
+    .azkar-links {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .azkar-links>div {
+        font-size: 13px;
+        padding: 16px 10px 12px;
+    }
+
+    .azkar-links>div::before {
+        font-size: 24px;
+    }
+}
+
+/* ========================================================
+   OVERLAY WRAPPER — يظهر تلقائياً بـ CSS :has()
+   ======================================================== */
+.azkar-overlay-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: none;
+    /* مخفي افتراضياً */
+    align-items: flex-start;
+    justify-content: center;
+    padding: 80px 16px 90px;
+    overflow-y: auto;
+}
+
+/* يظهر أوتوماتيك لما .azkar-content تتملى */
+.azkar-overlay-wrapper:has(.azkar-content:not(:empty)) {
+    display: flex;
+    animation: overlayFadeIn 0.3s ease forwards;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Backdrop */
+.azkar-overlay-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 12, 18, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+/* ── Panel ── */
+.azkar-panel {
+    width: 100%;
+    max-width: 760px;
+    background: var(--parchment-bg);
+    border: 1px solid var(--gold-border);
+    border-radius: 22px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(197, 164, 78, 0.12);
+    overflow: hidden;
+    animation: panelSlideUp 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+@keyframes panelSlideUp {
+    from {
+        transform: translateY(40px) scale(0.97);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+body.dark-mode .azkar-panel {
+    background: var(--AlmostBlack);
+    border-color: rgba(197, 164, 78, 0.18);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(197, 164, 78, 0.08);
+}
+
+/* Panel header (sticky) */
+.azkar-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--gold-border);
+    background: linear-gradient(135deg, rgba(197, 164, 78, 0.07), transparent);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    backdrop-filter: blur(6px);
+}
+
+body.dark-mode .azkar-panel-header {
+    border-bottom-color: rgba(197, 164, 78, 0.15);
+}
+
+/* Panel title */
+.azkar-panel-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold-dark);
+    margin: 0;
+}
+
+body.dark-mode .azkar-panel-title {
+    color: var(--gold-light);
+}
+
+/* Back button */
+.azkar-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--gold-border);
+    background: transparent;
+    color: var(--gold-dark);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.22s ease;
+}
+
+.count {
+    cursor: pointer;
+}
+
+.count:hover {
+    transform: scale(1.1) !important;
+}
+
+.azkar-back-btn:hover {
+    background: rgba(197, 164, 78, 0.12);
+    border-color: var(--gold-primary);
+    transform: translateX(3px);
+}
+
+body.dark-mode .azkar-back-btn {
+    color: var(--gold-light);
+    border-color: rgba(197, 164, 78, 0.22);
+}
+
+body.dark-mode .azkar-back-btn:hover {
+    background: rgba(197, 164, 78, 0.1);
+}
+
+/* Panel body */
+.azkar-panel-body {
+    padding: 20px 22px 26px;
+}
+
+/* ========================================================
+   AZKAR CONTENT — البطاقات اللي يحطها JS
+   ======================================================== */
+.azkar-content .card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(250, 247, 240, 0.92)) !important;
+    border: 1px solid var(--gold-border) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 14px rgba(197, 164, 78, 0.08) !important;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.azkar-content .card::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--gold-primary), #e8d48b);
+    border-radius: 0 16px 16px 0;
+}
+
+.azkar-content .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(197, 164, 78, 0.14) !important;
+}
+
+body.dark-mode .azkar-content .card {
+    background: linear-gradient(145deg, #1b1f28, #14171e) !important;
+    border-color: rgba(197, 164, 78, 0.15) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-mode .azkar-content .card:hover {
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Zekr text */
+.azkar-content .card-text {
+    font-family: 'Amiri', serif;
+    font-size: clamp(17px, 2.2vw, 21px);
+    line-height: 2;
+    color: #2b1f06;
+    direction: rtl;
+}
+
+body.dark-mode .azkar-content .card-text {
+    color: #f0e6d2;
+}
+
+/* Count paragraph */
+.azkar-content .card-body>p:last-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 0;
+    padding: 6px 14px;
+    border-radius: 50px;
+    background: rgba(197, 164, 78, 0.08);
+    border: 1px solid var(--gold-border);
+    color: var(--gold-dark);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+body.dark-mode .azkar-content .card-body>p:last-child {
+    background: rgba(197, 164, 78, 0.06);
+    border-color: rgba(197, 164, 78, 0.2);
+    color: var(--gold-light);
+}
+
+/* Responsive panel */
+@media (max-width: 600px) {
+    .azkar-overlay-wrapper {
+        padding: 68px 10px 80px;
+    }
+
+    .azkar-panel {
+        border-radius: 16px;
+    }
+
+    .azkar-panel-header {
+        padding: 14px 16px;
+    }
+
+    .azkar-panel-title {
+        font-size: 1.15rem;
+    }
+
+    .azkar-panel-body {
+        padding: 14px 14px 20px;
+    }
+
+    .azkar-back-btn span {
+        display: none;
+    }
+}

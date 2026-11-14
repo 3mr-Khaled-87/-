@@ -60,7 +60,7 @@
                     </button>
 
                     <!-- Dark / Light Mode Toggle (Always Visible in Header) -->
-                    <button class="nav-btn theme-btn" id="themeToggleBtn" title="تبديل الوضع الليلي / النهاري">
+                    <button class="nav-btn theme-btn theme-toggle-btn" id="themeToggleBtn" title="تبديل الوضع الليلي / النهاري">
                         <i class="fa-solid fa-moon" id="themeIcon"></i>
                     </button>
                 </div>
@@ -154,20 +154,35 @@
 
     <!-- Tafseer -->
     <section class="tafseer-section" id="tafseerSection" hidden aria-labelledby="tafseerTitle" aria-hidden="true">
-        <div class="tafseer-header">
-            <div class="tafseer-heading">
-                <span class="tafseer-heading-icon"><i class="fa-solid fa-book-open"></i></span>
-                <div>
-                    <span class="section-kicker">إضاءات من كلام أهل العلم</span>
-                    <h2 id="tafseerTitle">تفسير السورة</h2>
+        <div class="tafseer-header-wrap" id="tafseerHeaderWrap">
+            <div class="tafseer-header">
+                <div class="tafseer-heading">
+                    <span class="tafseer-heading-icon"><i class="fa-solid fa-book-open"></i></span>
+                    <div>
+                        <span class="section-kicker">إضاءات من كلام أهل العلم</span>
+                        <h2 id="tafseerTitle">تفسير السورة</h2>
+                    </div>
+                </div>
+                <div class="tafseer-actions">
+                    <div class="tafseer-search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" id="tafseerSearchInput" class="tafseer-search-input" placeholder="ابحث برقم الآية أو كلمة...">
+                    </div>
+                    <select id="tafseerSelect" class="tafseer-select" title="اختر كتاب التفسير">
+                        <option value="14" selected>تفسير ابن كثير</option>
+                        <option value="16">التفسير الميسر</option>
+                        <option value="91">تفسير السعدي</option>
+                    </select>
+                    <button class="tafseer-close-btn" id="closeTafsirBtn" type="button" title="إغلاق التفسير">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
             </div>
-            <button class="tafseer-close-btn" id="closeTafsirBtn" type="button" title="إغلاق التفسير">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+            <div class="tafseer-divider" aria-hidden="true"><span>۞</span></div>
         </div>
-        <div class="tafseer-divider" aria-hidden="true"><span>۞</span></div>
-        <div class="tafseer-text" id="tafseer-text" aria-live="polite"></div>
+        <div class="tafseer-body" id="tafseerBody">
+            <div class="tafseer-text" id="tafseer-text" aria-live="polite"></div>
+        </div>
     </section>
 
     <!-- Hidden native audio element -->

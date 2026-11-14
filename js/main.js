@@ -51,8 +51,9 @@ if (lightModeLegacy) {
     });
 }
 
-// Run on page load
+// Run on page load and listen for theme updates across tabs/pages
 syncThemeState();
+window.addEventListener('storage', syncThemeState);
 
 // Mobile Navigation active icons
 const icons = document.querySelectorAll('.icon');
@@ -73,3 +74,37 @@ if (changingTextElem && typeof Typed !== 'undefined') {
         loop: true
     });
 }
+
+// Floating Sadaqa Modal (نافذة الصدقة الجارية المنبثقة)
+const sadaqaFloatBtn = document.getElementById('sadaqaFloatBtn');
+const sadaqaModalBackdrop = document.getElementById('sadaqaModalBackdrop');
+const sadaqaModalClose = document.getElementById('sadaqaModalClose');
+const sadaqaModalAcceptBtn = document.getElementById('sadaqaModalAcceptBtn');
+
+function openSadaqaModal() {
+    if (sadaqaModalBackdrop) sadaqaModalBackdrop.classList.add('active');
+}
+
+function closeSadaqaModal() {
+    if (sadaqaModalBackdrop) sadaqaModalBackdrop.classList.remove('active');
+}
+
+if (sadaqaFloatBtn) {
+    sadaqaFloatBtn.addEventListener('click', openSadaqaModal);
+}
+if (sadaqaModalClose) {
+    sadaqaModalClose.addEventListener('click', closeSadaqaModal);
+}
+if (sadaqaModalAcceptBtn) {
+    sadaqaModalAcceptBtn.addEventListener('click', closeSadaqaModal);
+}
+if (sadaqaModalBackdrop) {
+    sadaqaModalBackdrop.addEventListener('click', (e) => {
+        if (e.target === sadaqaModalBackdrop) {
+            closeSadaqaModal();
+        }
+    });
+}
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSadaqaModal();
+});

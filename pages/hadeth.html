@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="icon" href="../images/logo.png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/ahadeth.css">
+    <title>ديني - الأحاديث النبوية الشريفة</title>
+</head>
+
+<body>
+
+    <!-- Unified Site Header -->
+    <header>
+        <nav class="d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <a href="../index.html" class="logo-brand">
+                    <span class="logo-text">ديني</span>
+                </a>
+            </div>
+            <div class="links">
+                <ul>
+                    <li>
+                        <a href="../index.html" name="index">
+                            <span class="text">الرئيسية</span>
+                            <span class="underLine"></span>
+                            <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                    viewBox="0 -960 960 960" width="24px">
+                                    <path
+                                        d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+                                </svg><span class="nav-label">الرئيسية</span></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../pages/quraan.html" name="quraan">
+                            <span class="text">القرآن</span>
+                            <span class="underLine"></span>
+                            <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                    viewBox="0 -960 960 960" width="24px">
+                                    <path
+                                        d="M300-80q-58 0-99-41t-41-99v-520q0-58 41-99t99-41h500v600q-25 0-42.5 17.5T740-220q0 25 17.5 42.5T800-160v80H300Zm-60-267q14-7 29-10t31-3h20v-440h-20q-25 0-42.5 17.5T240-740v393Zm160-13h320v-440H400v440Zm-160 13v-453 453Zm60 187h373q-6-14-9.5-28.5T660-220q0-16 3-31t10-29H300q-26 0-43 17.5T240-220q0 26 17 43t43 17Z" />
+                                </svg><span class="nav-label">القرآن</span></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../pages/hadeth.html" class="strong" name="ahadeth">
+                            <span class="text">الأحاديث</span>
+                            <span class="underLine"></span>
+                            <i class="icon hero"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                    viewBox="0 -960 960 960" width="24px">
+                                    <path
+                                        d="M560-564v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-600q-38 0-73 9.5T560-564Zm0 220v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-380q-38 0-73 9t-67 27Zm0-110v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-490q-38 0-73 9.5T560-454ZM260-320q47 0 91.5 10.5T440-278v-394q-41-24-87-36t-93-12q-36 0-71.5 7T120-692v396q35-12 69.5-18t70.5-6Zm260 42q44-21 88.5-31.5T700-320q36 0 70.5 6t69.5 18v-396q-33-14-68.5-21t-71.5-7q-47 0-93 12t-87 36v394Zm-40 118q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740q51-30 106.5-45T700-800q52 0 102 12t96 36q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59ZM280-494Z" />
+                                </svg><span class="nav-label">الأحاديث</span></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../pages/azkar.html" name="azkar">
+                            <span class="text">الأذكار</span>
+                            <span class="underLine"></span>
+                            <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                    viewBox="0 -960 960 960" width="24px">
+                                    <path
+                                        d="M600-640 480-760l120-120 120 120-120 120Zm200 120-80-80 80-80 80 80-80 80ZM483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 99 11 193.5T520-521q71 71 165.5 100T879-410q-26 144-138 237T483-80Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T463-465q-61-61-97-138t-43-163q-77 43-120.5 118.5T159-484q0 135 94.5 229.5T483-160Zm-20-305Z" />
+                                </svg><span class="nav-label">الأذكار</span></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../pages/payerTimes.html" name="mawakeet">
+                            <span class="text">مواقيت الصلاة</span>
+                            <span class="underLine"></span>
+                            <i class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                    viewBox="0 -960 960 960" width="24px">
+                                    <path
+                                        d="M40-120v-491q-18-11-29-28.5T0-680q0-23 24-56t56-64q32 31 56 64t24 56q0 23-11 40.5T120-611v171h80v-80q0-25 16-48t46-30q-11-17-16.5-37t-5.5-41q0-40 19-74t51-56l170-114 170 114q32 22 51 56t19 74q0 21-5.5 41T698-598q30 7 46 30t16 48v80h80v-171q-18-11-29-28.5T800-680q0-23 24-56t56-64q32 31 56 64t24 56q0 23-11 40.5T920-611v491H520v-160q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280v160H40Zm356-480h168q32 0 54-22t22-54q0-20-9-36.5T606-740l-126-84-126 84q-16 11-25 27.5t-9 36.5q0 32 22 54t54 22ZM120-200h240v-80q0-50 35-85t85-35q50 0 85 35t35 85v80h240v-160H680v-160H280v160H120v160Zm360-320Zm0-80Zm0 2Z" />
+                                </svg><span class="nav-label">المواقيت</span></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-tools">
+                <button class="theme-toggle-btn" id="themeToggleBtn" title="تبديل الوضع الليلي / النهاري">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ahadeth-page-wrapper">
+
+        <!-- Hero Section -->
+        <section class="hadeth-hero">
+            <div class="hadeth-hero-badge">
+                <i class="fa-solid fa-book-quran"></i>
+                <span>السنة النبوية المطهرة</span>
+            </div>
+            <h1>الأحاديث النبوية الشريفة</h1>
+            <p class="hadeth-hero-sub">
+                تصفح أصح كتب الحديث الشريف مع التخريج والسند والأبواب الفقهية، والبحث السريع والمفضلة
+            </p>
+            <div class="hadeth-hero-divider"></div>
+        </section>
+
+        <!-- Books Selection Cards -->
+        <section class="books-container">
+            <div class="books-grid">
+                <!-- صحيح البخاري -->
+                <div class="book-card active" id="bokhary-btn" data-book="bukhari">
+                    <span class="book-active-badge">الكتاب المختار</span>
+                    <div class="book-card-icon">
+                        <i class="fa-solid fa-scroll"></i>
+                    </div>
+                    <div class="book-card-info">
+                        <h2 class="book-card-title">صحيح البخاري</h2>
+                        <p class="book-card-author">الإمام محمد بن إسماعيل البخاري</p>
+                        <div class="book-card-meta">
+                            <span><i class="fa-regular fa-folder-open"></i> 97 كتاباً</span>
+                            <span><i class="fa-solid fa-hashtag"></i> 7,563 حديثاً</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- صحيح مسلم -->
+                <div class="book-card" id="muslim-btn" data-book="muslim">
+                    <span class="book-active-badge">الكتاب المختار</span>
+                    <div class="book-card-icon">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                    <div class="book-card-info">
+                        <h2 class="book-card-title">صحيح مسلم</h2>
+                        <p class="book-card-author">الإمام مسلم بن الحجاج النيسابوري</p>
+                        <div class="book-card-meta">
+                            <span><i class="fa-regular fa-folder-open"></i> 56 كتاباً</span>
+                            <span><i class="fa-solid fa-hashtag"></i> 7,500+ حديثاً</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الأربعون النووية (إضافة قيّمة) -->
+                <div class="book-card" id="nawawi-btn" data-book="nawawi">
+                    <span class="book-active-badge">الكتاب المختار</span>
+                    <div class="book-card-icon">
+                        <i class="fa-solid fa-star-and-crescent"></i>
+                    </div>
+                    <div class="book-card-info">
+                        <h2 class="book-card-title">الأربعون النووية</h2>
+                        <p class="book-card-author">الإمام يحيى بن شرف النووي</p>
+                        <div class="book-card-meta">
+                            <span><i class="fa-regular fa-folder-open"></i> جوامع الكلم</span>
+                            <span><i class="fa-solid fa-hashtag"></i> 42 حديثاً</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Toolbar -->
+        <section class="hadeth-toolbar">
+            <div class="hadeth-search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="hadethSearchInput" class="hadeth-search-input"
+                    placeholder="ابحث في الأبواب أو رقم الحديث (مثال: الوحي، الصلاة، أو رقم 1)...">
+                <button type="button" id="hadethSearchClear" class="hadeth-search-clear" title="مسح">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="hadeth-toolbar-actions">
+                <button class="hadeth-btn btn-gold" id="randomHadithBtn" title="عرض حديث عشوائي">
+                    <i class="fa-solid fa-dice"></i>
+                    <span>حديث عشوائي</span>
+                </button>
+
+                <button class="hadeth-btn" id="favoritesBtn" title="الأحاديث المحفوظة">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span>المفضلة</span>
+                    <span class="hadeth-btn-badge" id="favCountBadge">0</span>
+                </button>
+
+                <!-- Font Size Controls -->
+                <div class="font-ctrl-group" title="حجم خط الحديث">
+                    <button class="font-ctrl-btn" id="fontDecreaseBtn" title="تصغير الخط">A-</button>
+                    <button class="font-ctrl-btn" id="fontResetBtn" title="إعادة ضبط الخط">A</button>
+                    <button class="font-ctrl-btn" id="fontIncreaseBtn" title="تكبير الخط">A+</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapters / Sections Grid View -->
+        <section class="sections-view" id="sectionsView">
+            <div class="sections-header">
+                <h3 class="sections-title" id="sectionsTitle">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>أبواب صحيح البخاري</span>
+                </h3>
+                <span class="sections-count-tag" id="sectionsCountTag">97 كتاباً</span>
+            </div>
+
+            <div class="sections-grid" id="sectionsGrid">
+                <!-- Dynamic Section Cards Rendered via ahadeth.js -->
+            </div>
+        </section>
+
+        <!-- Hadiths Reader View -->
+        <section class="hadiths-reader-wrapper" id="hadithsReaderWrapper">
+            <div class="reader-header-card">
+                <div class="reader-top-bar">
+                    <button class="back-to-sections-btn" id="backToSectionsBtn">
+                        <i class="fa-solid fa-arrow-right"></i>
+                        <span>العودة للأبواب</span>
+                    </button>
+
+                    <div class="reader-nav-btns">
+                        <button class="reader-nav-btn" id="prevSectionBtn">
+                            <i class="fa-solid fa-chevron-right"></i>
+                            <span>الباب السابق</span>
+                        </button>
+                        <button class="reader-nav-btn" id="nextSectionBtn">
+                            <span>الباب التالي</span>
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <h2 class="reader-chapter-title" id="readerChapterTitle">كتاب بدء الوحي</h2>
+                <div class="reader-meta-row">
+                    <span class="reader-meta-tag" id="readerBookTag">
+                        <i class="fa-solid fa-book"></i> صحيح البخاري
+                    </span>
+                    <span class="reader-meta-tag" id="readerHadithCountTag">
+                        <i class="fa-solid fa-list-ol"></i> 7 أحاديث
+                    </span>
+                    <span class="reader-meta-tag" id="readerRangeTag">
+                        <i class="fa-solid fa-hashtag"></i> الأحاديث من 1 إلى 7
+                    </span>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div class="hadeth-loading-box" id="hadethLoadingBox" style="display: none;">
+                <div class="hadeth-spinner"></div>
+                <p class="hadeth-loading-text">جاري تحميل الأحاديث الشريفة من المصدر...</p>
+            </div>
+
+            <!-- Hadiths List Container -->
+            <div class="hadiths-list" id="hadithsList">
+                <!-- Hadith Cards injected dynamically -->
+            </div>
+
+            <!-- Load More Container (for large sections) -->
+            <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+                <button class="load-more-btn" id="loadMoreBtn">
+                    <i class="fa-solid fa-angles-down"></i>
+                    <span>عرض المزيد من أحاديث هذا الباب</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Legacy Containers for compatibility -->
+        <div id="bokhary-ahadeth" style="display: none;"></div>
+        <div id="muslim-ahadeth" style="display: none;"></div>
+
+    </main>
+
+    <!-- Modal Backdrop -->
+    <div class="hadeth-modal-backdrop" id="modalBackdrop"></div>
+
+    <!-- Random Hadith Modal -->
+    <div class="hadeth-modal" id="randomHadithModal">
+        <div class="hadeth-modal-header">
+            <h3 class="hadeth-modal-title">
+                <i class="fa-solid fa-dice" style="color: var(--gold-primary);"></i>
+                <span>حديث عشوائي شريف</span>
+            </h3>
+            <button class="hadeth-modal-close" id="closeRandomModalBtn" title="إغلاق">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="hadeth-modal-body" id="randomHadithModalBody">
+            <div class="hadeth-loading-box">
+                <div class="hadeth-spinner"></div>
+                <p class="hadeth-loading-text">جاري اختيار حديث شريف...</p>
+            </div>
+        </div>
+        <div class="hadeth-modal-header" style="border-top: 1px solid var(--gold-border); border-bottom: none; justify-content: flex-end;">
+            <button class="hadeth-btn btn-gold" id="nextRandomHadithBtn">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>حديث آخر</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div class="hadeth-modal" id="favoritesModal">
+        <div class="hadeth-modal-header">
+            <h3 class="hadeth-modal-title">
+                <i class="fa-solid fa-bookmark" style="color: var(--gold-primary);"></i>
+                <span>الأحاديث المحفوظة في المفضلة</span>
+            </h3>
+            <button class="hadeth-modal-close" id="closeFavoritesModalBtn" title="إغلاق">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="hadeth-modal-body" id="favoritesModalBody">
+            <!-- Favorites List or Empty State -->
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="hadeth-toast" id="hadithToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">تم نسخ الحديث بنجاح</span>
+    </div>
+
+    <!-- Floating Sadaqa Heart Icon (تحت الهيدر على اليمين) -->
+    <button class="sadaqa-float-btn" id="sadaqaFloatBtn" title="صدقة جارية" aria-label="صدقة جارية">
+        <span class="sadaqa-pulse-ring"></span>
+        <span class="sadaqa-pulse-ring delay"></span>
+        <i class="fa-solid fa-heart"></i>
+    </button>
+
+    <!-- Centered Sadaqa Popup Modal -->
+    <div class="sadaqa-modal-backdrop" id="sadaqaModalBackdrop">
+        <div class="sadaqa-modal-card">
+            <button class="sadaqa-modal-close" id="sadaqaModalClose" title="إغلاق">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="sadaqa-card-icon">
+                <i class="fa-solid fa-hands-praying"></i>
+            </div>
+            <h3 class="sadaqa-card-title">« صدقةٌ جاريةٌ علي أرواحنا وأرواح المسلمين »</h3>
+            <div class="sadaqa-card-divider"></div>
+            <p class="sadaqa-card-dua">غَفَرَ اللهُ لَنَا وَلَكُم</p>
+            <div class="sadaqa-card-verse-box">
+                <p class="sadaqa-card-verse">
+                    ﴿ وَالَّذِينَ جَاءُوا مِن بَعْدِهِمْ يَقُولُونَ رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ ﴾
+                </p>
+                <small class="sadaqa-card-ref">سورة الحشر — آية ١٠</small>
+            </div>
+            <button class="sadaqa-card-accept-btn" id="sadaqaModalAcceptBtn">
+                اللهم آمين
+            </button>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="../js/main.js"></script>
+    <script src="../js/ahadeth.js"></script>
+</body>
+
+</html>

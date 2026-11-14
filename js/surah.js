@@ -1227,9 +1227,18 @@ const tafseerBtn = document.getElementById('openTafsirBtn');
 const tafseerSection = document.getElementById('tafseerSection');
 const closeTafsirBtn = document.getElementById('closeTafsirBtn');
 const tafseerContainer = document.getElementById('tafseer-text');
-const ayahsCount = Number(localStorage.getItem('ayat_count'));
+const tafseerTitle = document.getElementById('tafseerTitle');
+const tafseerSelect = document.getElementById('tafseerSelect');
 
-let tafseerTitle = document.getElementById('tafseerTitle')
+let currentTafseerId = '14'; // 14 = تفسير ابن كثير, 16 = التفسير الميسر, 91 = تفسير السعدي
+
+function getSurahDisplayName() {
+    const cached = allSurahsInfoCache.find(s => parseInt(s.number) === SurahNumber);
+    if (cached && cached.name_ar) return cached.name_ar;
+    const titleEl = document.getElementById('surahTitle');
+    if (titleEl && titleEl.textContent) return titleEl.textContent;
+    return localStorage.getItem('surahNAme') || `السورة رقم ${toArabicDigits(SurahNumber)}`;
+}
 
 function setTafseerVisibility(isVisible) {
     if (!tafseerSection) return;
@@ -1246,11 +1255,21 @@ function setTafseerVisibility(isVisible) {
 }
 
 if (tafseerBtn) {
-    tafseerBtn.addEventListener('click', () => setTafseerVisibility(true));
+    tafseerBtn.addEventListener('click', async () => {
+        setTafseerVisibility(true);
+        await getTafseer(currentTafseerId);
+    });
 }
 
 if (closeTafsirBtn) {
     closeTafsirBtn.addEventListener('click', () => setTafseerVisibility(false));
+}
+
+if (tafseerSelect) {
+    tafseerSelect.addEventListener('change', async (e) => {
+        currentTafseerId = e.target.value;
+        await getTafseer(currentTafseerId);
+    });
 }
 
 document.addEventListener('keydown', (event) => {
@@ -1259,59 +1278,181 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// async function getTafseer() {
-//     if (!tafseerContainer) return;
+const tafseerSearchInput = document.getElementById('tafseerSearchInput');
+let loadedTafseerItems = [];
 
+function renderTafseerItems(items) {
+    if (!tafseerContainer) return;
 
-//     try {
-//         // const response = await fetch(`http://api.quran-tafseer.com/tafseer/1/${SurahNumber}/1/${ayahsCount}`);
-//         // if (!response.ok) {
-//         //     throw new Error(`Tafseer request failed with status ${response.status}`);
-//         // }
+    if (!items || items.length === 0) {
+        tafseerContainer.innerHTML = `
+            <div class="tafseer-status py-4">
+                <i class="fa-solid fa-magnifying-glass fa-2x mb-3" style="color: var(--gold-primary);"></i>
+                <p class="fs-5">لا توجد آيات مطابقة لبحثك في هذا التفسير.</p>
+            </div>
+        `;
+        return;
+    }
 
-//         // const data = await response.json();
-//         // console.log(data)
-//         await fetch(`http://api.quran-tafseer.com/tafseer/1/${SurahNumber}/1/${ayahsCount}`)
-//         .then(res => res.json())
-//         .then(data => {
-//             console.log(data)
-//             data.forEach(t => {
-//                 tafseerContainer.innerHTML += `
-//                     <span>${t.text}</span>
-//                 `
-//                 let surahName = localStorage.getItem("surahNAme")
-//                 tafseerTitle.innerHTML = `تفسير  ${surahName}`
-//             });
-//         })
+    tafseerContainer.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
-//         if (!Array.isArray(data) || data.length === 0) {
-//             tafseerContainer.innerHTML = '<div class="tafseer-status">لا يوجد تفسير متاح لهذه السورة.</div>';
-//             return;
-//         }
+    items.forEach(item => {
+        const entry = document.createElement('div');
+        entry.className = 'tafseer-entry';
+        entry.id = `tafseer-ayah-${item.ayah}`;
+        entry.innerHTML = `
+            <div class="tafseer-ayah-header">
+                <span class="tafseer-ayah-badge">الآية ${toArabicDigits(item.ayah)}</span>
+            </div>
+            <div class="tafseer-content">${item.text}</div>
+        `;
+        fragment.appendChild(entry);
+    });
 
-        
-//     } catch (error) {
-//         console.error('Unable to load tafseer:', error);
-//         tafseerContainer.innerHTML = '<div class="tafseer-status">تعذر تحميل التفسير حاليًا. حاول مرة أخرى.</div>';
-//     }
-// }
-
-async function getTafseer() {
-    let Num = SurahNumber;
-    let Count = ayahsCount
-    await fetch(`http://api.quran-tafseer.com/tafseer/1/${SurahNumber}/1/${ayahsCount}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            data.forEach(t => {
-                tafseerContainer.innerHTML += `
-                    <span>${t.text}</span>
-                `
-                let surahName = localStorage.getItem("surahNAme")
-                tafseerTitle.innerHTML = `تفسير  ${surahName}`
-            });
-        })
-    
+    tafseerContainer.appendChild(fragment);
 }
 
-getTafseer();
+if (tafseerSearchInput) {
+    tafseerSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        if (!loadedTafseerItems || loadedTafseerItems.length === 0) return;
+
+        if (!query) {
+            renderTafseerItems(loadedTafseerItems);
+            return;
+        }
+
+        // Clean query to plain number if user typed Arabic digits
+        const normalizedDigits = query.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+
+        const filtered = loadedTafseerItems.filter(item => {
+            const numStr = String(item.ayah);
+            const arabicNum = toArabicDigits(item.ayah);
+            const plainText = item.text.replace(/<[^>]*>/g, '').toLowerCase();
+
+            return (
+                numStr === query ||
+                numStr === normalizedDigits ||
+                arabicNum === query ||
+                plainText.includes(query)
+            );
+        });
+
+        renderTafseerItems(filtered);
+    });
+}
+
+async function getTafseer(tafseerId = currentTafseerId) {
+    if (!tafseerContainer) return;
+
+    currentTafseerId = tafseerId;
+    if (tafseerSelect && tafseerSelect.value !== currentTafseerId) {
+        tafseerSelect.value = currentTafseerId;
+    }
+
+    if (tafseerSearchInput) {
+        tafseerSearchInput.value = '';
+    }
+
+    tafseerContainer.innerHTML = `
+        <div class="tafseer-status">
+            <div class="spinner-border mb-3" style="color: var(--gold-primary); width: 2.5rem; height: 2.5rem;" role="status"></div>
+            <p class="fs-5" style="color: var(--gold-dark); font-family: 'Amiri', serif;">جاري تحميل تفسير السورة كاملاً...</p>
+        </div>
+    `;
+
+    if (tafseerTitle) {
+        const surahName = getSurahDisplayName();
+        const tafseerName = (tafseerSelect && tafseerSelect.options[tafseerSelect.selectedIndex]) 
+            ? tafseerSelect.options[tafseerSelect.selectedIndex].text 
+            : 'تفسير القرآن';
+        tafseerTitle.textContent = `${tafseerName} - ${surahName}`;
+    }
+
+    let tafseerList = null;
+
+    // 1. Fetch complete Surah using Quran.com API with per_page=300 & pagination loop
+    try {
+        let page = 1;
+        let allTafsirs = [];
+
+        while (true) {
+            const response = await fetch(`https://api.quran.com/api/v4/tafsirs/${currentTafseerId}/by_chapter/${SurahNumber}?per_page=300&page=${page}`);
+            if (!response.ok) break;
+
+            const data = await response.json();
+            if (Array.isArray(data.tafsirs) && data.tafsirs.length > 0) {
+                allTafsirs.push(...data.tafsirs);
+            }
+
+            // Stop if no next page exists
+            if (!data.pagination || !data.pagination.next_page || data.pagination.next_page <= page) {
+                break;
+            }
+            page = data.pagination.next_page;
+        }
+
+        if (allTafsirs.length > 0) {
+            tafseerList = allTafsirs.map(item => {
+                const ayahNum = item.verse_key ? parseInt(item.verse_key.split(':')[1]) : 1;
+                return {
+                    ayah: ayahNum,
+                    text: item.text || ''
+                };
+            });
+        }
+    } catch (apiErr) {
+        console.warn('Online Tafsir fetch failed, attempting local fallback:', apiErr);
+    }
+
+    // 2. If online fetch failed, fallback to local JSON files (contains all ayahs)
+    if (!tafseerList || tafseerList.length === 0) {
+        try {
+            const localRes = await fetch(`../json/ibn-kathir/${SurahNumber}.json`);
+            if (localRes.ok) {
+                const localData = await localRes.json();
+                if (Array.isArray(localData.ayahs) && localData.ayahs.length > 0) {
+                    tafseerList = localData.ayahs.map(a => ({
+                        ayah: a.ayah || 1,
+                        text: a.text || ''
+                    }));
+                }
+            }
+        } catch (localErr) {
+            console.warn('Local Tafsir fetch failed:', localErr);
+        }
+    }
+
+    // 3. Render complete Tafseer or friendly error
+    if (!tafseerList || tafseerList.length === 0) {
+        loadedTafseerItems = [];
+        tafseerContainer.innerHTML = `
+            <div class="tafseer-status text-danger py-5">
+                <i class="fa-solid fa-triangle-exclamation fa-2x mb-3" style="color: var(--gold-dark);"></i>
+                <p class="fs-5">تعذر تحميل التفسير حالياً. يرجى التحقق من الاتصال بالإنترنت والمحاولة مجدداً.</p>
+                <button type="button" class="nav-btn mt-3" style="margin: 0 auto; display: inline-flex;" onclick="getTafseer('${currentTafseerId}')">
+                    <i class="fa-solid fa-rotate-right me-2"></i> إعادة المحاولة
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    loadedTafseerItems = tafseerList;
+
+    // Update title with full count
+    if (tafseerTitle) {
+        const surahName = getSurahDisplayName();
+        const tafseerName = (tafseerSelect && tafseerSelect.options[tafseerSelect.selectedIndex]) 
+            ? tafseerSelect.options[tafseerSelect.selectedIndex].text 
+            : 'تفسير القرآن';
+        tafseerTitle.textContent = `${tafseerName} - ${surahName} (${toArabicDigits(loadedTafseerItems.length)} آية)`;
+    }
+
+    renderTafseerItems(loadedTafseerItems);
+}
+
+// Expose getTafseer globally for retry button
+window.getTafseer = getTafseer;
+

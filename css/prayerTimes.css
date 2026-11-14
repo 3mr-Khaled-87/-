@@ -1,0 +1,711 @@
+/* ========================================================
+   PRAYER TIMES PAGE — صفحة مواقيت الصلاة
+   ======================================================== */
+
+/* Main Container */
+.prayer-page-container,
+.prayerTimes {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 105px 20px 70px;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 855px) {
+    .prayer-page-container,
+    .prayerTimes {
+        padding-top: 85px;
+        padding-bottom: 100px;
+    }
+}
+
+/* ── Page Header & Titles ── */
+.prayer-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.prayer-header h2,
+h2.prayer-title {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 4.5vw, 2.9rem);
+    font-weight: 700;
+    color: var(--gold-dark);
+    margin-bottom: 8px;
+    position: relative;
+    display: inline-block;
+}
+
+body.dark-mode .prayer-header h2,
+body.dark-mode h2.prayer-title {
+    color: var(--gold-light);
+    text-shadow: 0 2px 14px rgba(197, 164, 78, 0.25);
+}
+
+.prayer-header h2::after,
+h2.prayer-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold-primary), transparent);
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+.prayer-subtitle {
+    font-size: 15px;
+    color: #6c757d;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+body.dark-mode .prayer-subtitle {
+    color: #a4abb5;
+}
+
+/* ── Dates & Location Card (.top / #Dates) ── */
+.prayerTimes .top,
+#top {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(246, 240, 226, 0.85));
+    border: 1px solid var(--gold-border);
+    border-radius: 20px;
+    padding: 18px 24px;
+    box-shadow: 0 4px 20px var(--gold-shadow);
+    margin-bottom: 28px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .prayerTimes .top,
+body.dark-mode #top {
+    background: linear-gradient(145deg, rgba(27, 31, 40, 0.95), rgba(20, 23, 30, 0.92));
+    border-color: rgba(197, 164, 78, 0.25);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.date-bar-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.date-chips-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.date-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(197, 164, 78, 0.1);
+    border: 1px solid rgba(197, 164, 78, 0.22);
+    border-radius: 12px;
+    padding: 7px 14px;
+    font-size: 14px;
+    color: var(--DeepBlack);
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+body.dark-mode .date-chip {
+    background: rgba(197, 164, 78, 0.12);
+    border-color: rgba(197, 164, 78, 0.2);
+    color: #e2d9c8;
+}
+
+.date-chip i {
+    color: var(--gold-primary);
+    font-size: 15px;
+}
+
+.date-chip .chip-label {
+    color: #887854;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+body.dark-mode .date-chip .chip-label {
+    color: #bfa87a;
+}
+
+.date-chip .chip-value,
+.date-chip #day,
+.date-chip #month,
+.date-chip #hejryDate,
+.date-chip #meladyDate,
+.date-chip #timeZone {
+    font-weight: 700;
+    color: var(--gold-dark);
+}
+
+body.dark-mode .date-chip .chip-value,
+body.dark-mode .date-chip #day,
+body.dark-mode .date-chip #month,
+body.dark-mode .date-chip #hejryDate,
+body.dark-mode .date-chip #meladyDate,
+body.dark-mode .date-chip #timeZone {
+    color: var(--gold-light);
+}
+
+/* Fallback if user's HTML keeps #day, #month, #timeZone as direct divs */
+.prayerTimes>#day,
+.prayerTimes>#month,
+.prayerTimes>#timeZone {
+    display: inline-block;
+    background: rgba(197, 164, 78, 0.12);
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 6px 14px;
+    margin: 0 6px 14px 0;
+    font-weight: 700;
+    color: var(--gold-dark);
+}
+
+body.dark-mode .prayerTimes>#day,
+body.dark-mode .prayerTimes>#month,
+body.dark-mode .prayerTimes>#timeZone {
+    color: var(--gold-light);
+}
+
+/* ── Legacy #Dates backward compatibility ── */
+#Dates {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    direction: rtl !important;
+}
+
+#Dates h5 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body.dark-mode #Dates h5 {
+    color: var(--gold-light);
+}
+
+/* ── CountDown Timer (.counterDowen) ── */
+.counterDowen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 18px;
+}
+
+.counterDowen > span {
+    font-size: 13px;
+    font-weight: 600;
+    color: #887854;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+body.dark-mode .counterDowen > span {
+    color: #bfa87a;
+}
+
+.counterDowen .time {
+    font-family: 'Cairo', monospace;
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--gold-dark);
+    background: rgba(197, 164, 78, 0.1);
+    border: 1px solid var(--gold-border);
+    border-radius: 16px;
+    padding: 8px 24px;
+    min-width: 200px;
+    text-align: center;
+    direction: ltr;
+    animation: countdownTick 1s ease-in-out infinite;
+}
+
+body.dark-mode .counterDowen .time {
+    color: var(--gold-light);
+    background: rgba(197, 164, 78, 0.12);
+    border-color: rgba(197, 164, 78, 0.28);
+    text-shadow: 0 2px 14px rgba(197, 164, 78, 0.3);
+}
+
+@keyframes countdownTick {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.82; }
+}
+
+/* ── Divider between countdown and badge ── */
+.countdown-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold-primary), transparent);
+    border-radius: 2px;
+    margin: 0 auto 14px;
+}
+
+/* ── Next Prayer Name & Time (inside #nowPrayerTime) ── */
+#nowPrayerTime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.next-prayer-name {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: var(--gold-dark);
+    line-height: 1.1;
+}
+
+body.dark-mode .next-prayer-name {
+    color: var(--gold-light);
+    text-shadow: 0 2px 14px rgba(197, 164, 78, 0.3);
+}
+
+.next-prayer-time-display {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    color: #6b5c3e;
+    direction: ltr;
+    letter-spacing: 1px;
+}
+
+body.dark-mode .next-prayer-time-display {
+    color: #d4b97a;
+}
+
+/* ── Hero Next Prayer Card (#nowPrayerTime container) ── */
+.next-prayer-hero {
+    position: relative;
+    background: radial-gradient(circle at 10% 20%, rgba(197, 164, 78, 0.22) 0%, rgba(255, 255, 255, 0.95) 90%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 24px;
+    padding: 28px 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 30px rgba(197, 164, 78, 0.25);
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .next-prayer-hero {
+    background: radial-gradient(circle at 10% 20%, rgba(197, 164, 78, 0.2) 0%, rgba(20, 23, 30, 0.96) 90%);
+    border-color: rgba(197, 164, 78, 0.5);
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.5);
+}
+
+.next-prayer-hero:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 40px rgba(197, 164, 78, 0.32);
+}
+
+.next-prayer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--gold-primary), #dfc067);
+    color: #2b1f06;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 800;
+    box-shadow: 0 3px 12px rgba(197, 164, 78, 0.3);
+    margin-bottom: 14px;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #2b1f06;
+    border-radius: 50%;
+    display: inline-block;
+    animation: prayerPulse 1.6s infinite ease-in-out;
+}
+
+@keyframes prayerPulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.4);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+}
+
+.next-prayer-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 10px 0;
+}
+
+.next-prayer-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: rgba(197, 164, 78, 0.15);
+    border: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: var(--gold-dark);
+    animation: prayerFloat 3s ease-in-out infinite;
+}
+
+body.dark-mode .next-prayer-icon {
+    color: #ffeaa7;
+    background: rgba(223, 192, 103, 0.25);
+    border: 1px solid rgba(223, 192, 103, 0.5);
+    box-shadow: 0 0 16px rgba(223, 192, 103, 0.3);
+}
+
+@keyframes prayerFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+#nowPrayerTime,
+.now-prayer-time-val {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--gold-dark);
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+body.dark-mode #nowPrayerTime,
+body.dark-mode .now-prayer-time-val {
+    color: var(--gold-light);
+    text-shadow: 0 2px 18px rgba(197, 164, 78, 0.3);
+}
+
+.next-prayer-ayah {
+    font-family: 'Amiri', serif;
+    font-size: 16px;
+    color: #7a6e55;
+    margin-top: 10px;
+}
+
+body.dark-mode .next-prayer-ayah {
+    color: #c9bda4;
+}
+
+/* ── All Prayer Times Section (.times / #allTimes) ── */
+.times {
+    margin-top: 15px;
+}
+
+.section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    margin-bottom: 20px;
+    font-family: 'Amiri', serif;
+}
+
+body.dark-mode .section-label {
+    color: var(--gold-light);
+}
+
+.section-label i {
+    color: var(--gold-primary);
+    font-size: 20px;
+}
+
+/* Grid Layout for #allTimes */
+#allTimes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+/* Prayer Cards Styling (covers .prayer-card, .time-card, .card, or direct divs inside #allTimes) */
+#allTimes .prayer-card,
+#allTimes .time-card,
+#allTimes .card,
+#allTimes>div {
+    position: relative;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(246, 240, 226, 0.9));
+    border: 1px solid var(--gold-border);
+    border-radius: 20px;
+    padding: 22px 14px 18px;
+    text-align: center;
+    box-shadow: 0 4px 16px var(--gold-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 170px;
+}
+
+body.dark-mode #allTimes .prayer-card,
+body.dark-mode #allTimes .time-card,
+body.dark-mode #allTimes .card,
+body.dark-mode #allTimes>div {
+    background: linear-gradient(145deg, #1b1f28, #14171e);
+    border-color: rgba(197, 164, 78, 0.25);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* Hover elevation */
+#allTimes .prayer-card:hover,
+#allTimes .time-card:hover,
+#allTimes .card:hover,
+#allTimes>div:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold-primary);
+    box-shadow: 0 12px 28px rgba(197, 164, 78, 0.28);
+}
+
+/* Gold shimmer top bar */
+#allTimes .prayer-card::before,
+#allTimes .time-card::before,
+#allTimes .card::before,
+#allTimes>div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+#allTimes .prayer-card:hover::before,
+#allTimes .time-card:hover::before,
+#allTimes .card:hover::before,
+#allTimes>div:hover::before {
+    opacity: 1;
+    height: 5px;
+}
+
+/* Prayer Card Icon */
+.prayer-card-icon,
+#allTimes .prayer-card i,
+#allTimes .icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(197, 164, 78, 0.12);
+    border: 1px solid rgba(197, 164, 78, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--gold-dark);
+    margin-bottom: 12px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+body.dark-mode .prayer-card-icon,
+body.dark-mode #allTimes .prayer-card i,
+body.dark-mode #allTimes .icon {
+    color: #ffeaa7;
+    background: rgba(223, 192, 103, 0.22);
+    border: 1px solid rgba(223, 192, 103, 0.45);
+    box-shadow: 0 0 12px rgba(223, 192, 103, 0.25);
+}
+
+#allTimes .prayer-card:hover .prayer-card-icon,
+#allTimes>div:hover .prayer-card-icon,
+#allTimes>div:hover i {
+    transform: scale(1.1) rotate(-6deg);
+    background: rgba(197, 164, 78, 0.22);
+}
+
+/* Prayer Name */
+.prayer-name,
+#allTimes h3,
+#allTimes h4,
+#allTimes strong {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    margin-bottom: 8px;
+}
+
+body.dark-mode .prayer-name,
+body.dark-mode #allTimes h3,
+body.dark-mode #allTimes h4,
+body.dark-mode #allTimes strong {
+    color: var(--gold-light);
+}
+
+/* Prayer Time Display */
+.prayer-time,
+#allTimes p,
+#allTimes .time,
+#allTimes span.time {
+    font-family: 'Cairo', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--DeepBlack);
+    direction: ltr;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+body.dark-mode .prayer-time,
+body.dark-mode #allTimes p,
+body.dark-mode #allTimes .time,
+body.dark-mode #allTimes span.time {
+    color: #ffffff;
+}
+
+/* ── Bottom Section (.bottom) ── */
+.prayerTimes .bottom,
+.bottom {
+    margin-top: 40px;
+}
+
+.prayer-reminder-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(246, 240, 226, 0.85));
+    border: 1px solid var(--gold-border);
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 4px 18px var(--gold-shadow);
+    margin-bottom: 24px;
+}
+
+body.dark-mode .prayer-reminder-card {
+    background: linear-gradient(145deg, #1b1f28, #14171e);
+    border-color: rgba(197, 164, 78, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.reminder-verse {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    line-height: 1.9;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+body.dark-mode .reminder-verse {
+    color: var(--gold-light);
+}
+
+.reminder-ref {
+    font-size: 13px;
+    color: #887854;
+    font-weight: 600;
+}
+
+body.dark-mode .reminder-ref {
+    color: #bfa87a;
+}
+
+.method-note {
+    text-align: center;
+    font-size: 13px;
+    color: #7d8793;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+body.dark-mode .method-note {
+    color: #929ba8;
+}
+
+.method-note i {
+    color: var(--gold-primary);
+}
+
+/* ── Responsive Refinements ── */
+@media (max-width: 768px) {
+    #allTimes {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .date-bar-wrapper {
+        justify-content: center;
+    }
+
+    .date-chips-group {
+        justify-content: center;
+    }
+
+    .date-chip {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .next-prayer-hero {
+        padding: 20px 16px;
+    }
+
+    #nowPrayerTime {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #allTimes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #allTimes .prayer-card,
+    #allTimes>div {
+        min-height: 150px;
+        padding: 16px 10px 14px;
+    }
+
+    .prayer-name {
+        font-size: 17px;
+    }
+
+    .prayer-time {
+        font-size: 19px;
+    }
+
+    .prayer-card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 17px;
+        margin-bottom: 8px;
+    }
+}
+
