@@ -36,8 +36,14 @@ let currentAzkarType = "";
 let currentDay = new Date().getDay();
 let savedDay = localStorage.getItem("day")
 const azkarKey = 'Azkar_'
+
+// حذف كل مفاتيح الأذكار عند بداية يوم جديد لإعادة تصفير العدادات
 if (savedDay !== null && savedDay != currentDay) {
-    localStorage.removeItem(`${azkarKey}${currentAzkarType}`);
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith(azkarKey)) {
+            localStorage.removeItem(key);
+        }
+    });
 }
 localStorage.setItem("day", currentDay);
 
@@ -120,14 +126,15 @@ azkarContent.addEventListener('click', (e) => {
 
             let cardId = e.target.closest('.card').id;
 
-            azkarList = JSON.parse(localStorage.getItem(`${azkarKey}${currentAzkarType}`));
-
-            let index = azkarList.findIndex(z => z.id == cardId);
-            if (index !== -1) {
-                azkarList[index].isDone = true;
+            let raw = localStorage.getItem(`${azkarKey}${currentAzkarType}`);
+            if (raw) {
+                azkarList = JSON.parse(raw);
+                let index = azkarList.findIndex(z => z.id == cardId);
+                if (index !== -1) {
+                    azkarList[index].isDone = true;
+                }
+                localStorage.setItem(`${azkarKey}${currentAzkarType}`, JSON.stringify(azkarList));
             }
-
-            localStorage.setItem(`${azkarKey}${currentAzkarType}`, JSON.stringify(azkarList));
 
             e.target.innerHTML = `<span>تم الانتهاء ✅</span>`;
         }
@@ -135,7 +142,9 @@ azkarContent.addEventListener('click', (e) => {
 })
 
 function savedNewZekrCount(count, cardId){
-    let storageData  = JSON.parse(localStorage.getItem(`${azkarKey}${currentAzkarType}`));
+    let raw = localStorage.getItem(`${azkarKey}${currentAzkarType}`);
+    if (!raw) return;
+    let storageData = JSON.parse(raw);
     let findCard = storageData.find(i => i.id == cardId)
     if(findCard){
         findCard.count = count;
